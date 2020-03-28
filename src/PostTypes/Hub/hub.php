@@ -28,6 +28,66 @@ class HubPostType
         );
     }
 
+
+    public function  get_post_meta_save($id, $meta, $single) {
+        $value = get_post_meta($id, $meta, $single);
+
+        if ($value) {
+            return $value;
+        }
+
+        return "";
+    }
+
+
+    public function rest_endpoint_hubs($data) {
+        $posts = get_posts(array(
+            'post_type'         => 'mvv_hub',
+            'posts_per_page'    =>  -1,
+            'orderby'           => 'title',
+            'order'              => 'ASC'
+        ));
+         
+          if ( empty( $posts ) ) {
+            return null;
+          }
+
+          $data = array();
+
+          foreach ($posts as $post) {
+              array_push($data, array(
+                "hub_email" => $this->get_post_meta_save($post->ID, "hub_email", true),
+                "hub_city" => $this->get_post_meta_save($post->ID, "hub_city", true),
+                "hub_state" => $this->get_post_meta_save($post->ID, "hub_state", true),
+                "hub_country" => $this->get_post_meta_save($post->ID, "hub_country", true),
+                "hub_contact_person" => $this->get_post_meta_save($post->ID, "hub_contact_person", true),
+                "hub_twitter" => $this->get_post_meta_save($post->ID, "hub_twitter", true),
+                "hub_phone" => $this->get_post_meta_save($post->ID, "hub_phone", true),
+                "hub_address" => $this->get_post_meta_save($post->ID, "hub_address", true),
+                "hub_offer" => $this->get_post_meta_save($post->ID, "hub_offer", true),
+                "hub_capacity" => $this->get_post_meta_save($post->ID, "hub_capacity", true),
+                "hub_description" => $this->get_post_meta_save($post->ID, "hub_description", true),
+                "hub_for_free" => $this->get_post_meta_save($post->ID, "hub_for_free", true),
+                "hub_for_net_cost" => $this->get_post_meta_save($post->ID, "hub_for_net_cost", true),
+              ));
+          }
+         
+          return array(
+            "draw" => 1,
+            "recordsTotal" => count($data),
+            "recordsFiltered"=> count($data),
+            "data" => $data
+          );
+    }
+
+    public function add_rest_endpoints() {
+        
+        register_rest_route( 'api/v1', '/hubs', array(
+            'methods' => 'GET',
+            'callback' => array( $this, 'rest_endpoint_hubs'),
+        ) );
+    }
+
     public function register_posttype()
     {
 
@@ -38,6 +98,7 @@ class HubPostType
             'menu_icon'   => plugin_dir_url(__FILE__) . 'logo.png',
             'supports'    => array('title', 'author'/*, 'editor', 'excerpt'*/),
             'taxonomies'  => array(),
+            'show_in_rest' => true,
         );
 
         register_post_type($this->slug, $args);
@@ -105,6 +166,8 @@ class HubPostType
 
         add_action('add_meta_boxes', array($this, 'add_metaboxes'));
         add_action( 'init', array( $this, 'save_custom_meta_box') );
+
+        add_action( 'rest_api_init', array( $this, 'add_rest_endpoints') );
 
         // add_filter('manage_workshop_columns', array($this, 'list_columns_head'));
         // add_action('manage_posts_custom_column',  array($this, 'list_columns_content'), 10, 2);
