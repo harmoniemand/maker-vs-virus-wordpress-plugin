@@ -56,6 +56,7 @@ class HubPostType
 
           foreach ($posts as $post) {
               array_push($data, array(
+                "hub_id" => $post->ID,
                 "hub_email" => $this->get_post_meta_save($post->ID, "hub_email", true),
                 "hub_city" => $this->get_post_meta_save($post->ID, "hub_city", true),
                 "hub_state" => $this->get_post_meta_save($post->ID, "hub_state", true),
