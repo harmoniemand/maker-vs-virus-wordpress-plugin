@@ -36,7 +36,7 @@ class HubPostType
             'public'      => true,
             'has_archive' => true,
             'menu_icon'   => plugin_dir_url(__FILE__) . 'logo.png',
-            'supports'    => array('title', /*'editor', 'author', 'excerpt'*/),
+            'supports'    => array('title', 'author'/*, 'editor', 'excerpt'*/),
             'taxonomies'  => array(),
         );
 
