@@ -7,6 +7,25 @@ wp_nonce_field(basename(__FILE__), 'metabox_hub_options');
 
 ?>
 
+<?php $hub_lat = get_post_meta($post->ID, 'hub_lat', true); ?>
+<?php $hub_long = get_post_meta($post->ID, 'hub_long', true); ?>
+<div style="margin-top: .5rem; display: flex; justify-content: center; align-items: center;">
+    <label class="" style="min-width: 150px;" for="hub_zip">Coords</label>
+    <input type="text" style="margin-left: 1rem; width: 100%;" id="hub_zip" name="hub_zip" value="<?php echo $hub_lat ?> , <?php echo $hub_long ?>" placeholder="Coords" disabled />
+</div>
+
+<?php $hub_street = get_post_meta($post->ID, 'hub_street', true); ?>
+<div style="margin-top: .5rem; display: flex; justify-content: center; align-items: center;">
+    <label class="" style="min-width: 150px;" for="hub_street">Straße</label>
+    <input type="text" style="margin-left: 1rem; width: 100%;" id="hub_street" name="hub_street" value="<?php echo $hub_street ?>" placeholder="Straße" />
+</div>
+
+<?php $hub_zip = get_post_meta($post->ID, 'hub_zip', true); ?>
+<div style="margin-top: .5rem; display: flex; justify-content: center; align-items: center;">
+    <label class="" style="min-width: 150px;" for="hub_zip">Postleitzahl</label>
+    <input type="text" style="margin-left: 1rem; width: 100%;" id="hub_zip" name="hub_zip" value="<?php echo $hub_zip ?>" placeholder="Postleitzahl" />
+</div>
+
 <?php $hub_city = get_post_meta($post->ID, 'hub_city', true); ?>
 <div style="margin-top: .5rem; display: flex; justify-content: center; align-items: center;">
     <label class="" style="min-width: 150px;" for="hub_city">Stadt</label>
