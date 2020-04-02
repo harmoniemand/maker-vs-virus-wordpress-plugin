@@ -102,7 +102,7 @@ class HubPostType
             'public'      => true,
             'has_archive' => true,
             'menu_icon'   => plugin_dir_url(__FILE__) . 'logo.png',
-            'supports'    => array('title', 'author'/*, 'editor', 'excerpt'*/),
+            'supports'    => array('title', 'author', 'thumbnail', 'editor'/*, 'excerpt'*/),
             'taxonomies'  => array(),
             'show_in_rest' => true,
         );
