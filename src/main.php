@@ -34,8 +34,19 @@ if ( ! class_exists( 'Makerspace_Announcement_Main' ) ) {
             add_action('admin_enqueue_scripts', array($this, 'load_styles') );
 
             require_once plugin_dir_path( __FILE__ ) . '/PostTypes/Hub/hub.php';
-            $cal = new HubPostType();
-            $cal->register();
+            $hub = new HubPostType();
+            $hub->register();
+
+            
+            require_once plugin_dir_path( __FILE__ ) . '/PostTypes/Maker/maker.php';
+            $maker = new makerPostType();
+            $maker->register();
+
+            
+
+            require_once plugin_dir_path( __FILE__ ) . '/AdminPages/Settings.php';
+            $settingsAdminPage = new SettingsAdminPage();
+            $settingsAdminPage->register();
         }
 
         public static function activate() {

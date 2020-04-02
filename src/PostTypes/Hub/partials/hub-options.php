@@ -93,14 +93,6 @@ wp_nonce_field(basename(__FILE__), 'metabox_hub_options');
 </div>
 
 
-
-<?php $hub_address = get_post_meta($post->ID, 'hub_address', true); ?>
-<div style="margin-top: .5rem; display: flex; justify-content: center; align-items: center;">
-    <label class="" style="min-width: 150px;" for="hub_address">Anschrift</label>
-    <textarea style="margin-left: 1rem; width: 100%;" id="hub_address" name="hub_address"><?php echo $hub_address ?></textarea>
-</div>
-
-
 <?php $hub_offer = get_post_meta($post->ID, 'hub_offer', true); ?>
 <div style="margin-top: .5rem; display: flex; justify-content: center; align-items: center;">
     <label class="" style="min-width: 150px;" for="hub_offer">Wir bieten</label>

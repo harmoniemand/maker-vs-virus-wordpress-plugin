@@ -1,7 +1,7 @@
 <?php
 
 
-class HubPostType
+class MakerPostType
 {
 
     private $slug;
@@ -19,12 +19,12 @@ class HubPostType
 
     public function __construct()
     {
-        $this->slug = "mvv_hub";
+        $this->slug = "mvv_maker";
 
         $this->labels = array(
-            'name'          => __('Hubs'),
-            'singular_name' => __('hub'),
-            'edit_item'     => __('Hub bearbeiten'),
+            'name'          => __('Makers'),
+            'singular_name' => __('Maker'),
+            'edit_item'     => __('Maker bearbeiten'),
         );
     }
 
@@ -44,7 +44,7 @@ class HubPostType
     public function rest_endpoint_hubs($data)
     {
         $posts = get_posts(array(
-            'post_type'         => 'mvv_hub',
+            'post_type'         => 'mvv_maker',
             'posts_per_page'    =>  -1,
             'orderby'           => 'title',
             'order'              => 'ASC'
@@ -58,22 +58,22 @@ class HubPostType
 
         foreach ($posts as $post) {
             array_push($data, array(
-                "hub_id" => $post->ID,
-                "hub_email" => $this->get_post_meta_save($post->ID, "hub_email", true),
-                "hub_street" => $this->get_post_meta_save($post->ID, "hub_street", true),
-                "hub_zip" => $this->get_post_meta_save($post->ID, "hub_zip", true),
-                "hub_city" => $this->get_post_meta_save($post->ID, "hub_city", true),
-                "hub_state" => $this->get_post_meta_save($post->ID, "hub_state", true),
-                "hub_country" => $this->get_post_meta_save($post->ID, "hub_country", true),
-                "hub_contact_person" => $this->get_post_meta_save($post->ID, "hub_contact_person", true),
-                "hub_twitter" => $this->get_post_meta_save($post->ID, "hub_twitter", true),
-                "hub_phone" => $this->get_post_meta_save($post->ID, "hub_phone", true),
-                "hub_address" => $this->get_post_meta_save($post->ID, "hub_address", true),
-                "hub_offer" => nl2br($this->get_post_meta_save($post->ID, "hub_offer", true)),
-                "hub_capacity" => nl2br($this->get_post_meta_save($post->ID, "hub_capacity", true)),
-                "hub_description" => nl2br($this->get_post_meta_save($post->ID, "hub_description", true)),
-                "hub_for_free" => $this->get_post_meta_save($post->ID, "hub_for_free", true),
-                "hub_for_net_cost" => $this->get_post_meta_save($post->ID, "hub_for_net_cost", true),
+                "maker_id" => $post->ID,
+                "maker_email" => $this->get_post_meta_save($post->ID, "maker_email", true),
+                "maker_street" => $this->get_post_meta_save($post->ID, "maker_street", true),
+                "maker_zip" => $this->get_post_meta_save($post->ID, "maker_zip", true),
+                "maker_city" => $this->get_post_meta_save($post->ID, "maker_city", true),
+                "maker_state" => $this->get_post_meta_save($post->ID, "maker_state", true),
+                "maker_country" => $this->get_post_meta_save($post->ID, "maker_country", true),
+                "maker_contact_person" => $this->get_post_meta_save($post->ID, "maker_contact_person", true),
+                "maker_twitter" => $this->get_post_meta_save($post->ID, "maker_twitter", true),
+                "maker_phone" => $this->get_post_meta_save($post->ID, "maker_phone", true),
+                "maker_address" => $this->get_post_meta_save($post->ID, "maker_address", true),
+                "maker_offer" => nl2br($this->get_post_meta_save($post->ID, "maker_offer", true)),
+                "maker_capacity" => nl2br($this->get_post_meta_save($post->ID, "maker_capacity", true)),
+                "maker_description" => nl2br($this->get_post_meta_save($post->ID, "maker_description", true)),
+                "maker_for_free" => $this->get_post_meta_save($post->ID, "maker_for_free", true),
+                "maker_for_net_cost" => $this->get_post_meta_save($post->ID, "maker_for_net_cost", true),
             ));
         }
 
@@ -114,7 +114,7 @@ class HubPostType
     public function save_custom_meta_box()
     {
 
-        if (!isset($_POST['metabox_hub_options']))
+        if (!isset($_POST['metabox_maker_options']))
             return;
 
         $pid = $_POST["post_ID"];
@@ -128,20 +128,18 @@ class HubPostType
         }
 
         $fields = array(
-            "hub_email",
-            "hub_street",
-            "hub_zip",
-            "hub_city",
-            "hub_state",
-            "hub_country",
-            "hub_contact_person",
-            "hub_twitter",
-            "hub_phone",
-            "hub_offer",
-            "hub_capacity",
-            "hub_description",
-            "hub_for_free",
-            "hub_for_net_cost"
+            "maker_email",
+            "maker_twitter",
+            "maker_phone",
+
+            "maker_street",
+            "maker_zip",
+            "maker_city",
+            "maker_state",
+            "maker_country",
+            
+            "maker_capacity",
+            "maker_description",
         );
 
         foreach ($fields as $field) {
@@ -152,7 +150,7 @@ class HubPostType
 
 
         $google_api_key = get_option('google_geocoding_api_key');
-        $address = $_POST['hub_street'] . " " . $_POST["hub_zip"] . " " . $_POST["hub_city"] . " " . $_POST["hub_state"] . " " . $_POST["hub_country"];
+        $address = $_POST['maker_street'] . " " . $_POST["maker_zip"] . " " . $_POST["maker_city"] . " " . $_POST["maker_state"] . " " . $_POST["maker_country"];
         $url = "https://maps.googleapis.com/maps/api/geocode/json?sensor=false&key=" . $google_api_key . "&address=" . urlencode($address);
 
         $header = array("Accept: application/json");
@@ -173,20 +171,20 @@ class HubPostType
         $lat = $result->results[0]->geometry->location->lat;
         $long = $result->results[0]->geometry->location->lng;
 
-        update_post_meta($pid, "hub_lat", $lat);
-        update_post_meta($pid, "hub_long", $long);
+        update_post_meta($pid, "maker_lat", $lat);
+        update_post_meta($pid, "maker_long", $long);
     }
 
     public function metabox_options_template()
     {
-        require(plugin_dir_path(__FILE__) . 'partials/hub-options.php');
+        require(plugin_dir_path(__FILE__) . 'partials/maker-options.php');
     }
 
     public function add_metaboxes()
     {
 
         add_meta_box(
-            'metabox_hub_options',
+            'metabox_maker_options',
             'Hub Details',
             array($this, 'metabox_options_template'),
             $this->slug,
@@ -202,7 +200,7 @@ class HubPostType
         add_action('add_meta_boxes', array($this, 'add_metaboxes'));
         add_action('init', array($this, 'save_custom_meta_box'));
 
-        add_action('rest_api_init', array($this, 'add_rest_endpoints'));
+        // add_action('rest_api_init', array($this, 'add_rest_endpoints'));
 
         // add_filter('manage_workshop_columns', array($this, 'list_columns_head'));
         // add_action('manage_posts_custom_column',  array($this, 'list_columns_content'), 10, 2);
