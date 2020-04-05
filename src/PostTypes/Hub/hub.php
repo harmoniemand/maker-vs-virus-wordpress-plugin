@@ -128,6 +128,8 @@ class HubPostType
         }
 
         $fields = array(
+            "hub_slack_channel",
+            "hub_slack_channel_invite_link",
             "hub_email",
             "hub_street",
             "hub_zip",
