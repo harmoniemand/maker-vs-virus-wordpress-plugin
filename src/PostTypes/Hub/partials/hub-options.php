@@ -16,7 +16,7 @@ wp_nonce_field(basename(__FILE__), 'metabox_hub_options');
 <?php $hub_slack_channel_invite_link = get_post_meta($post->ID, 'hub_slack_channel_invite_link', true); ?>
 <div style="margin-top: .5rem; display: flex; justify-content: center; align-items: center;">
     <label class="" style="min-width: 150px;" for="hub_slack_channel_invite_link">Slack-Channel-Invite-Link</label>
-    <input type="text" style="margin-left: 1rem; width: 100%;" id="hub_slack_channel_invite_link" hub_slack_channel_invite_link="hub_slack_channel" value="<?php echo $hub_slack_channel_invite_link ?>" placeholder="Slack Channel Invite Link" />
+    <input type="text" style="margin-left: 1rem; width: 100%;" id="hub_slack_channel_invite_link" name="hub_slack_channel_invite_link" value="<?php echo $hub_slack_channel_invite_link ?>" placeholder="Slack Channel Invite Link" />
 </div>
 
 
