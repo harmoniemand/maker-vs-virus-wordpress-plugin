@@ -144,7 +144,8 @@ class HubPostType
             "hub_capacity",
             "hub_description",
             "hub_for_free",
-            "hub_for_net_cost"
+            "hub_for_net_cost",
+            "hub_areas"
         );
 
         foreach ($fields as $field) {

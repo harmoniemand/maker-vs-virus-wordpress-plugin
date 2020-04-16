@@ -146,3 +146,13 @@ wp_nonce_field(basename(__FILE__), 'metabox_hub_options');
                                                                                                     } ?>>
     <div style="width: 100%;"></div>
 </div>
+
+
+
+<?php $hub_areas = get_post_meta($post->ID, 'hub_areas', true); ?>
+<div style="margin-top: .5rem; display: flex; justify-content: center; align-items: center;">
+    <label class="" style="min-width: 150px;" for="hub_areas">Einzugsgebiet</label>
+    <input type="text" style="margin-left: 1rem; width: 100%;" id="hub_areas" name="hub_areas" value="<?php echo $hub_areas ?>" />
+</div>
+
+<?php require 'hub-map-selector.php' ?>
